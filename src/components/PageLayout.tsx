@@ -4,16 +4,15 @@ import Header from "./header";
 import Footer from "./footer";
 
 type Props = {
-  _site: Site;
   children?: React.ReactNode;
 };
 
-const PageLayout = ({ _site, children }: Props) => {
+const PageLayout = ({ children }: Props) => {
   return (
-    <div className="min-h-screen">
-      <Header _site={_site} />
+    <div className="">
+      <Header />
       {children}
-      <Footer _site={_site}></Footer>
+      {/* <Footer _site={_site}></Footer> */}
     </div>
   );
 };

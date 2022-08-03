@@ -2,6 +2,7 @@
  * This is an example of how to create a static template that uses getStaticProps to retrieve data.
  */
 import * as React from "react";
+import { useEffect } from "react";
 import fetch from "fetch-everywhere";
 import "../index.css";
 import {
@@ -9,12 +10,15 @@ import {
   GetPath,
   TransformProps,
   TemplateConfig,
+  GetHeadConfig,
   TemplateProps,
   TemplateRenderProps,
+  HeadConfig,
 } from "@yext/pages";
-import PageLayout from "../components/page-layout";
+import { themeChange } from "theme-change";
 import Card from "../components/card";
 import { ExternalImage } from "../types/ExternalImage";
+import PageLayout from "../components/PageLayout";
 
 /**
  * Not required depending on your use case.
@@ -22,7 +26,7 @@ import { ExternalImage } from "../types/ExternalImage";
 export const config: TemplateConfig = {
   // The name of the feature. If not set the name of this file will be used (without extension).
   // Use this when you need to override the feature name.
-  name: "turtlehead-tacos",
+  name: "card-showcase",
 };
 
 /**
@@ -61,6 +65,16 @@ export const getPath: GetPath<ExternalImageData> = () => {
   return `index.html`;
 };
 
+export const getHeadConfig: GetHeadConfig<TemplateRenderProps> = (
+  data
+): HeadConfig => {
+  return {
+    title: "Yext Card Showcase",
+    charset: "UTF-8",
+    viewport: "width=device-width, initial-scale=1",
+  };
+};
+
 type ExternalImageRenderData = TemplateRenderProps & {
   externalImage: ExternalImage;
 };
@@ -69,7 +83,7 @@ type ExternalImageRenderData = TemplateRenderProps & {
  * This is the main template. It can have any name as long as it's the default export.
  * The props passed in here are the direct result from `getStaticProps`.
  */
-const Static: Template<ExternalImageRenderData> = ({
+const CardShowcase: Template<ExternalImageRenderData> = ({
   relativePrefixToRoot,
   path,
   document,
@@ -77,47 +91,24 @@ const Static: Template<ExternalImageRenderData> = ({
 }) => {
   const { _site } = document;
 
+  useEffect(() => {
+    themeChange(false);
+  }, []);
+
   return (
     <>
-      <PageLayout _site={_site}>
+      <PageLayout>
         <div className="centered-container">
-          <div className="bg-red-900 text-5xl font-bold text-white p-10 flex items-center justify-center flex-col gap-x-14 gap-y-10 md:flex-row">
-            <h1>Welcome to Turtlehead Tacos</h1>
-          </div>
-          <div className="space-y-5">
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-              reprehenderit in voluptate velit esse cillum dolore eu fugiat
-              nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-              sunt in culpa qui officia deserunt mollit anim id est laborum.
-            </p>
-            <p>
-              Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-              accusantium doloremque laudantium, totam rem aperiam, eaque ipsa
-              quae ab illo inventore veritatis et quasi architecto beatae vitae
-              dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit
-              aspernatur aut odit aut fugit, sed quia consequuntur magni dolores
-              eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam
-              est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci
-              velit, sed quia non numquam eius modi tempora incidunt ut labore
-              et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima
-              veniam, quis nostrum exercitationem ullam corporis suscipit
-              laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem
-              vel eum iure reprehenderit qui in ea voluptate velit esse quam
-              nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo
-              voluptas nulla pariatur?
-            </p>
-            <div>
-              <Card {...externalImage} />
-            </div>
-          </div>
+          <p>
+            Yext Search can be used to surface any type of entity from the
+            Knowledge Graph. Each one of these entity types are represented in
+            the UI by a unique result card. This site is designed to showcase
+            some design ideas for different search result cards.
+          </p>
         </div>
       </PageLayout>
     </>
   );
 };
 
-export default Static;
+export default CardShowcase;
