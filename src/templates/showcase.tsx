@@ -15,10 +15,10 @@ import {
   TemplateRenderProps,
   HeadConfig,
 } from "@yext/pages";
-import { themeChange } from "theme-change";
 import Card from "../components/card";
 import { ExternalImage } from "../types/ExternalImage";
 import PageLayout from "../components/PageLayout";
+import ThemeSwitch from "../components/ThemeSwitch";
 
 /**
  * Not required depending on your use case.
@@ -91,20 +91,21 @@ const CardShowcase: Template<ExternalImageRenderData> = ({
 }) => {
   const { _site } = document;
 
-  useEffect(() => {
-    themeChange(false);
-  }, []);
-
   return (
     <>
       <PageLayout>
         <div className="centered-container">
-          <p>
-            Yext Search can be used to surface any type of entity from the
-            Knowledge Graph. Each one of these entity types are represented in
-            the UI by a unique result card. This site is designed to showcase
-            some design ideas for different search result cards.
-          </p>
+          <div className="py-4 md:py-0">
+            <p className="text-primary">
+              Yext Search can be used to surface any type of entity from the
+              Knowledge Graph. Each one of these entity types are represented in
+              the UI by a unique result card. This site is designed to showcase
+              some design ideas for different search result cards.
+            </p>
+          </div>
+          <div className="py-4">
+            <ThemeSwitch />
+          </div>
         </div>
       </PageLayout>
     </>

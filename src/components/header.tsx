@@ -18,7 +18,10 @@ const links: Link[] = [
 
 const Header = () => {
   const linkDoms = links.map((link) => (
-    <div key={link.label}>
+    <div
+      className="text-primary hover:text-primary-focus hover:border-b-2 border-transparent hover:border-primary"
+      key={link.label}
+    >
       <a href={link.url} target="_blank" rel="noreferrer">
         {link.label}
       </a>
@@ -28,9 +31,11 @@ const Header = () => {
   return (
     <>
       <div className="centered-container">
-        <div className="flex justify-between py-6">
-          <div className="text-4xl">Yext Search Result Card Showcase</div>
-          <div className="flex gap-x-6 text-lg font-semibold items-center">
+        <div className="flex flex-col md:flex-row justify-between pt-6">
+          <div className="text-4xl text-primary">
+            Yext Search Result Card Showcase
+          </div>
+          <div className="flex gap-x-6 text-lg font-semibold items-center py-2 md:py-0">
             {linkDoms}
           </div>
         </div>

@@ -9,7 +9,7 @@ type Props = {
 
 const PageLayout = ({ children }: Props) => {
   return (
-    <div className="">
+    <div className="bg-base-100">
       <Header />
       {children}
       {/* <Footer _site={_site}></Footer> */}
