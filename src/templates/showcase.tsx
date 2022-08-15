@@ -2,7 +2,7 @@
  * This is an example of how to create a static template that uses getStaticProps to retrieve data.
  */
 import * as React from "react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import fetch from "fetch-everywhere";
 import "../index.css";
 import {
@@ -19,6 +19,8 @@ import Card from "../components/card";
 import { ExternalImage } from "../types/ExternalImage";
 import PageLayout from "../components/PageLayout";
 import ThemeSwitch from "../components/ThemeSwitch";
+import searchConfigs from "../config/verticalConfigs";
+import { VerticalResults } from "../components/search/VerticalResults";
 
 /**
  * Not required depending on your use case.
@@ -90,6 +92,11 @@ const CardShowcase: Template<ExternalImageRenderData> = ({
   externalImage,
 }) => {
   const { _site } = document;
+  const [activeVerticalKey, setActiveVerticalKey] = useState("");
+
+  useEffect(() => {
+    setActiveVerticalKey(Object.keys(searchConfigs)[0]);
+  }, []);
 
   return (
     <>
@@ -103,9 +110,36 @@ const CardShowcase: Template<ExternalImageRenderData> = ({
               some design ideas for different search result cards.
             </p>
           </div>
-          <div className="py-4">
+          <div className="flex py-4 justify-between">
             <ThemeSwitch />
+            <div className="dropdown ">
+              <label
+                // TODO: look into tab index thing
+                tabIndex="0"
+                className="btn m-1 bg-base-100 text-primary hover:bg-base-300 border border-primary hover:border-primary"
+              >
+                {searchConfigs[activeVerticalKey]?.label ?? activeVerticalKey}
+              </label>
+              <ul
+                tabIndex="0"
+                className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52"
+              >
+                {Object.keys(searchConfigs)
+                  .filter((vKey) => vKey !== activeVerticalKey)
+                  .map((verticalKey) => (
+                    <li key={verticalKey} className="">
+                      <a
+                        onClick={() => setActiveVerticalKey(verticalKey)}
+                        className="btn bg-base-100 text-primary hover:bg-base-300 border border-primary hover:border-primary"
+                      >
+                        {searchConfigs[verticalKey].label}
+                      </a>
+                    </li>
+                  ))}
+              </ul>
+            </div>
           </div>
+          <VerticalResults verticalKey={activeVerticalKey} />
         </div>
       </PageLayout>
     </>

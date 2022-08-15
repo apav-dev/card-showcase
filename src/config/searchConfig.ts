@@ -1,8 +1,8 @@
 import { SearchConfig, SandboxEndpoints } from "@yext/search-headless-react";
 
 const searchConfig: SearchConfig = {
-  apiKey: "784c1bc1df2e59b36144b81d2e2528bb",
-  experienceKey: "card-showcase",
+  apiKey: "83122f48deddd8ab6c3ee86fc3ffaf69",
+  experienceKey: "react-showcase",
   locale: "en",
   endpoints: SandboxEndpoints,
 };

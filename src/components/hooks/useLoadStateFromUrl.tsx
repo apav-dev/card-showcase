@@ -12,7 +12,7 @@ export const useLoadStateFromURL = () => {
 
     const { query } = params;
     // if (query) {
-    searchActions.setQuery(query);
+    searchActions.setQuery(query ?? verticalKey);
 
     if (verticalKey) {
       searchActions.executeVerticalQuery();
