@@ -8,5 +8,6 @@ module.exports = {
   daisyui: {
     themes: ["corporate", "night"],
   },
-  plugins: [require("@tailwindcss/typography"), require("daisyui")],
+  plugins: [require("@tailwindcss/typography"), require("daisyui"), require('@tailwindcss/line-clamp'),
+],
 };

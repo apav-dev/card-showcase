@@ -25,7 +25,7 @@ export const VerticalResults = ({
       verticalKey={verticalKey}
       headlessId={`${verticalKey}_searcher`}
     >
-      <VR customCssClasses={customCssClasses} CardComponent={StandardCard} />
+      <VR customCssClasses={customCssClasses} CardComponent={CardComponent} />
     </SearchExperience>
   );
 };

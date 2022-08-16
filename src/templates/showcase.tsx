@@ -21,6 +21,7 @@ import PageLayout from "../components/PageLayout";
 import ThemeSwitch from "../components/ThemeSwitch";
 import searchConfigs from "../config/verticalConfigs";
 import { VerticalResults } from "../components/search/VerticalResults";
+import MovieCard from "../components/search/cards/MovieCard";
 
 /**
  * Not required depending on your use case.
@@ -139,7 +140,14 @@ const CardShowcase: Template<ExternalImageRenderData> = ({
               </ul>
             </div>
           </div>
-          <VerticalResults verticalKey={activeVerticalKey} />
+          <VerticalResults
+            verticalKey={activeVerticalKey}
+            CardComponent={MovieCard}
+            customCssClasses={{
+              verticalResultsContainer:
+                "grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4  gap-4 grid-cols-1",
+            }}
+          />
         </div>
       </PageLayout>
     </>
