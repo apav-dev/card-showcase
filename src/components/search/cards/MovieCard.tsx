@@ -21,10 +21,12 @@ const MovieCard = ({ result }: CardProps<Movie>) => {
                 {/* TODO: replace with image */}
                 <img src={"https://upload.wikimedia.org/wikipedia/commons/6/69/IMDB_Logo_2016.svg"} />
               </figure>
+              {/* TODO: replace with entity field */}
               <div className="pl-1 pr-4">7.5/10</div>
               <figure className="h-4 w-6 pl-2">
                 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5b/Rotten_Tomatoes.svg/2019px-Rotten_Tomatoes.svg.png" />
               </figure>
+              {/* TODO: replace with entity field */}
               <div className="pl-1">91%</div>
             </div>
             <div>

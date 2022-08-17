@@ -11,17 +11,14 @@ import {
   TransformProps,
   TemplateConfig,
   GetHeadConfig,
-  TemplateProps,
   TemplateRenderProps,
   HeadConfig,
+  TemplateProps,
 } from "@yext/pages";
-import Card from "../components/card";
-import { ExternalImage } from "../types/ExternalImage";
 import PageLayout from "../components/PageLayout";
 import ThemeSwitch from "../components/ThemeSwitch";
-import searchConfigs from "../config/verticalConfigs";
-import { VerticalResults } from "../components/search/VerticalResults";
-import MovieCard from "../components/search/cards/MovieCard";
+import SearchExperience from "../components/search/SearchExperience";
+import MovieResults from "../components/search/vertical-results/MovieResults";
 
 /**
  * Not required depending on your use case.
@@ -32,11 +29,6 @@ export const config: TemplateConfig = {
   name: "card-showcase",
 };
 
-/**
- * A local type for transformProps. This could live in src/types but it's generally
- * best practice to keep unshared types local to their usage.
- */
-type ExternalImageData = TemplateProps & { externalImage: ExternalImage };
 
 /**
  * Used to either alter or augment the props passed into the template at render time.
@@ -64,7 +56,7 @@ export const transformProps: TransformProps<ExternalImageData> = async (
  * NOTE: This currently has no impact on the local dev path. Local dev urls currently
  * take on the form: featureName/entityId
  */
-export const getPath: GetPath<ExternalImageData> = () => {
+export const getPath: GetPath<TemplateProps> = () => {
   return `index.html`;
 };
 
@@ -78,25 +70,22 @@ export const getHeadConfig: GetHeadConfig<TemplateRenderProps> = (
   };
 };
 
-type ExternalImageRenderData = TemplateRenderProps & {
-  externalImage: ExternalImage;
-};
+const verticals: Record<string, { label: string; VerticalResults: () => JSX.Element }> = {
+  movies: {
+    label: "Movies",
+    VerticalResults: MovieResults,
+  }
+}
 
 /**
  * This is the main template. It can have any name as long as it's the default export.
  * The props passed in here are the direct result from `getStaticProps`.
  */
-const CardShowcase: Template<ExternalImageRenderData> = ({
-  relativePrefixToRoot,
-  path,
-  document,
-  externalImage,
-}) => {
-  const { _site } = document;
+const CardShowcase: Template<TemplateRenderProps> = () => {
   const [activeVerticalKey, setActiveVerticalKey] = useState("");
 
   useEffect(() => {
-    setActiveVerticalKey(Object.keys(searchConfigs)[0]);
+    setActiveVerticalKey(Object.keys(verticals)[0]);
   }, []);
 
   return (
@@ -116,16 +105,16 @@ const CardShowcase: Template<ExternalImageRenderData> = ({
             <div className="dropdown ">
               <label
                 // TODO: look into tab index thing
-                tabIndex="0"
+                tabIndex={0}
                 className="btn m-1 bg-base-100 text-primary hover:bg-base-300 border border-primary hover:border-primary"
               >
-                {searchConfigs[activeVerticalKey]?.label ?? activeVerticalKey}
+                {verticals[activeVerticalKey]?.label ?? activeVerticalKey}
               </label>
               <ul
-                tabIndex="0"
+                tabIndex={0}
                 className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52"
               >
-                {Object.keys(searchConfigs)
+                {Object.keys(verticals)
                   .filter((vKey) => vKey !== activeVerticalKey)
                   .map((verticalKey) => (
                     <li key={verticalKey} className="">
@@ -133,21 +122,14 @@ const CardShowcase: Template<ExternalImageRenderData> = ({
                         onClick={() => setActiveVerticalKey(verticalKey)}
                         className="btn bg-base-100 text-primary hover:bg-base-300 border border-primary hover:border-primary"
                       >
-                        {searchConfigs[verticalKey].label}
+                        {verticals[verticalKey].label}
                       </a>
                     </li>
                   ))}
               </ul>
             </div>
           </div>
-          <VerticalResults
-            verticalKey={activeVerticalKey}
-            CardComponent={MovieCard}
-            customCssClasses={{
-              verticalResultsContainer:
-                "grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4  gap-4 grid-cols-1",
-            }}
-          />
+          <SearchExperience verticalKey="movies"><MovieResults /></SearchExperience>
         </div>
       </PageLayout>
     </>
